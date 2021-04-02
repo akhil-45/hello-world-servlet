@@ -56,8 +56,7 @@ stages {
 }
      stage('Artifact upload') {
       steps {
-     nexusPublisher nexusInstanceId: '1234', nexusRepositoryId: 'releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'target/helloworld.war']], mavenCoordinate: [artifactId: 'hello-world-servlet-example', groupId: 'com.geekcap.vmturbo', packaging: 'war', version: '$BUILD_NUMBER']]]
-      }
+     nexusArtifactUploader credentialsId: 'nexus-cred', groupId: 'com.geekcap.vmturbo', nexusUrl: '13.232.34.253:8081/nexus/', nexusVersion: 'nexus2', protocol: 'http', repository: 'release', version: '$BUILD_NUMBER'      }
  }
 }
 post {
