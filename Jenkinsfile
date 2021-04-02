@@ -12,7 +12,7 @@ stages {
 
       // Get some code from a GitHub repository
 
-      git 'https://github.com/akhil-45/hello-world-servlet.git'
+      git 'https://github.com/raknas999/hello-world-servlet.git'
 
       // Get the Maven tool.
      
@@ -56,15 +56,16 @@ stages {
 }
      stage('Artifact upload') {
       steps {
-     nexusArtifactUploader credentialsId: 'nexus-cred', groupId: 'com.geekcap.vmturbo', nexusUrl: '13.232.34.253:8081/nexus/', nexusVersion: 'nexus2', protocol: 'http', repository: 'release', version: '$BUILD_NUMBER'      }
+     nexusPublisher nexusInstanceId: '1234', nexusRepositoryId: 'releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'target/helloworld.war']], mavenCoordinate: [artifactId: 'hello-world-servlet-example', groupId: 'com.geekcap.vmturbo', packaging: 'war', version: '$BUILD_NUMBER']]]
+      }
  }
 }
 post {
         success {
-            mail to:"akhilmuniganti45@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build success"
+            mail to:"raknas000@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build success"
         }
         failure {
-            mail to:"akhilmuniganti45@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
+            mail to:"raknas000@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
         }
     }       
 }
